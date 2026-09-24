@@ -1,0 +1,123 @@
+[
+  {
+    "id": "fit-01",
+    "question": "How often should I increase the weight on my squat to keep making progress?",
+    "expectedSourceTitles": ["Progressive Overload"],
+    "expectedToolCalls": ["search_fitness_knowledge"]
+  },
+  {
+    "id": "fit-02",
+    "question": "What's the difference between linear and undulating periodization?",
+    "expectedSourceTitles": ["Periodization and the Principle of Specificity"],
+    "expectedToolCalls": ["search_fitness_knowledge"]
+  },
+  {
+    "id": "fit-03",
+    "question": "How many sets per week should I do for a muscle group to build size?",
+    "expectedSourceTitles": ["Training Volume, Intensity, and Frequency for Muscle Growth"],
+    "expectedToolCalls": ["search_fitness_knowledge"]
+  },
+  {
+    "id": "fit-04",
+    "question": "Should my workout be mostly compound lifts or isolation exercises?",
+    "expectedSourceTitles": ["Compound vs. Isolation Exercises"],
+    "expectedToolCalls": ["search_fitness_knowledge"]
+  },
+  {
+    "id": "fit-05",
+    "question": "My lower back rounds during my deadlift, is that dangerous?",
+    "expectedSourceTitles": ["Conventional Deadlift Form Checklist"],
+    "expectedToolCalls": ["search_exercises", "search_fitness_knowledge"]
+  },
+  {
+    "id": "fit-06",
+    "question": "What cues should I use to keep my elbows in the right position during bench press?",
+    "expectedSourceTitles": ["Barbell Bench Press Form Checklist"],
+    "expectedToolCalls": ["search_exercises", "search_fitness_knowledge"]
+  },
+  {
+    "id": "fit-07",
+    "question": "How do I know if I should do a pull-up with a full hang or partial reps?",
+    "expectedSourceTitles": ["Overhead Press and Pulling Exercise Form Checklist"],
+    "expectedToolCalls": ["search_exercises", "search_fitness_knowledge"]
+  },
+  {
+    "id": "fit-08",
+    "question": "How much sleep do I actually need for my muscles to recover?",
+    "expectedSourceTitles": ["Sleep and Recovery for Training Adaptation"],
+    "expectedToolCalls": ["search_fitness_knowledge"]
+  },
+  {
+    "id": "fit-09",
+    "question": "What's a good warm-up routine before a heavy squat session?",
+    "expectedSourceTitles": ["Warm-Up and Injury Prevention"],
+    "expectedToolCalls": ["search_fitness_knowledge"]
+  },
+  {
+    "id": "fit-10",
+    "question": "I'm always sore two days after training — is that normal or a bad sign?",
+    "expectedSourceTitles": ["Muscle Soreness (DOMS) and Active Recovery"],
+    "expectedToolCalls": ["search_fitness_knowledge"]
+  },
+  {
+    "id": "fit-11",
+    "question": "I'm brand new to the gym — how should I structure my first few weeks of training?",
+    "expectedSourceTitles": ["A Practical Framework for Beginners"],
+    "expectedToolCalls": ["search_fitness_knowledge"]
+  },
+  {
+    "id": "fit-12",
+    "question": "My knee has a sharp pain when I squat, should I keep training through it?",
+    "expectedSourceTitles": ["Injury Red Flags — When to Modify Training vs. Seek Medical Care"],
+    "expectedToolCalls": ["search_fitness_knowledge"]
+  },
+  {
+    "id": "fit-13",
+    "question": "What should I do to improve my ankle mobility for a deeper squat?",
+    "expectedSourceTitles": ["Mobility and Flexibility for Training"],
+    "expectedToolCalls": ["search_fitness_knowledge"]
+  },
+  {
+    "id": "fit-14",
+    "question": "Can I build muscle and lose fat at the same time?",
+    "expectedSourceTitles": ["Body Recomposition and Breaking Through Plateaus"],
+    "expectedToolCalls": ["search_fitness_knowledge"]
+  },
+  {
+    "id": "fit-15",
+    "question": "I haven't gained any strength in 6 weeks even though I'm training consistently, what's going on?",
+    "expectedSourceTitles": ["Body Recomposition and Breaking Through Plateaus", "Progressive Overload"],
+    "expectedToolCalls": ["search_fitness_knowledge"]
+  },
+  {
+    "id": "fit-16",
+    "question": "I gained 1kg this month and my lifts haven't improved. What should I change?",
+    "expectedSourceTitles": ["Body Recomposition and Breaking Through Plateaus", "Progressive Overload"],
+    "expectedToolCalls": ["get_user_profile", "get_weight_history", "get_workout_history", "search_fitness_knowledge"],
+    "notes": "The canonical multi-hop agent scenario: profile -> weight trend -> workout trend -> grounded recommendation."
+  },
+  {
+    "id": "fit-17",
+    "question": "Based on my logged workouts, have I been training consistently the last month?",
+    "expectedSourceTitles": [],
+    "expectedToolCalls": ["get_workout_history"]
+  },
+  {
+    "id": "fit-18",
+    "question": "What's my current daily calorie and protein target?",
+    "expectedSourceTitles": [],
+    "expectedToolCalls": ["get_user_profile"]
+  },
+  {
+    "id": "fit-19",
+    "question": "Should I do steady-state cardio or HIIT if I'm trying to keep my strength gains while losing fat?",
+    "expectedSourceTitles": ["Cardio for Fat Loss and Cardiovascular Health"],
+    "expectedToolCalls": ["search_fitness_knowledge"]
+  },
+  {
+    "id": "fit-20",
+    "question": "Log that I just did bench press, 4 sets of 6 reps at 70kg.",
+    "expectedSourceTitles": [],
+    "expectedToolCalls": ["log_workout"]
+  }
+]

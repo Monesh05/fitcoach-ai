@@ -1,0 +1,74 @@
+[
+  {
+    "id": "mm-01",
+    "image": "squat.jpg",
+    "question": "Is my squat form okay in this photo?",
+    "expectedImageContent": "single-leg / unilateral barbell back squat, standing position",
+    "expectedSourceTitles": ["Barbell Back Squat Form Checklist"]
+  },
+  {
+    "id": "mm-02",
+    "image": "squat.jpg",
+    "question": "",
+    "expectedImageContent": "single-leg / unilateral barbell back squat, standing position",
+    "expectedSourceTitles": ["Barbell Back Squat Form Checklist"],
+    "notes": "No caption at all — retrieval must be driven entirely by the image description."
+  },
+  {
+    "id": "mm-03",
+    "image": "deadlift.jpg",
+    "question": "What should I check about my deadlift setup based on this?",
+    "expectedImageContent": "deadlift exercise illustration/diagram",
+    "expectedSourceTitles": ["Conventional Deadlift Form Checklist"]
+  },
+  {
+    "id": "mm-04",
+    "image": "food-chicken.jpg",
+    "question": "How much protein is in this meal roughly?",
+    "expectedImageContent": "cooked chicken, a food/meal photo",
+    "expectedSourceTitles": ["Protein Intake for Muscle Growth and Recovery"]
+  },
+  {
+    "id": "mm-05",
+    "image": "food-chicken.jpg",
+    "question": "Does this fit into a cutting diet?",
+    "expectedImageContent": "cooked chicken, a food/meal photo",
+    "expectedSourceTitles": ["Caloric Balance for Fat Loss and Muscle Gain"]
+  },
+  {
+    "id": "mm-06",
+    "image": "food-burger.jpg",
+    "question": "I had this for lunch, how bad is it for my fat loss goal?",
+    "expectedImageContent": "burger and fries, fast food",
+    "expectedSourceTitles": ["Caloric Balance for Fat Loss and Muscle Gain"]
+  },
+  {
+    "id": "mm-07",
+    "image": "food-burger.jpg",
+    "question": "Log this as my dinner with your best estimate of the calories and macros.",
+    "expectedImageContent": "burger and fries, fast food",
+    "expectedToolCalls": ["log_meal"]
+  },
+  {
+    "id": "mm-08",
+    "image": "squat.jpg",
+    "question": "Given this and my recent workout history, is my squat depth/technique holding back my progress?",
+    "expectedImageContent": "single-leg / unilateral barbell back squat, standing position",
+    "expectedToolCalls": ["get_workout_history"],
+    "notes": "Tests that tools remain available alongside the image path."
+  },
+  {
+    "id": "mm-09",
+    "image": "deadlift.jpg",
+    "question": "What muscles does this exercise primarily work?",
+    "expectedImageContent": "deadlift exercise illustration/diagram",
+    "expectedSourceTitles": ["Conventional Deadlift Form Checklist"]
+  },
+  {
+    "id": "mm-10",
+    "image": "food-chicken.jpg",
+    "question": "What would go well with this to hit my carb target?",
+    "expectedImageContent": "cooked chicken, a food/meal photo",
+    "expectedSourceTitles": ["Carbohydrates and Dietary Fats for Training"]
+  }
+]

@@ -1,0 +1,93 @@
+[
+  {
+    "id": "rag-01",
+    "query": "How do I keep making strength gains over time?",
+    "expectedSourceTitle": "Progressive Overload",
+    "queryType": "semantic"
+  },
+  {
+    "id": "rag-02",
+    "query": "gemini-embedding-001 truncated dimensions",
+    "expectedSourceTitle": null,
+    "queryType": "out-of-domain",
+    "notes": "Deliberately out-of-domain technical query; nothing in the KB should score highly."
+  },
+  {
+    "id": "rag-03",
+    "query": "creatine monohydrate dosage",
+    "expectedSourceTitle": "Evidence-Based Supplements for Training",
+    "queryType": "keyword"
+  },
+  {
+    "id": "rag-04",
+    "query": "1.6 to 2.2 grams per kilogram protein",
+    "expectedSourceTitle": "Protein Intake for Muscle Growth and Recovery",
+    "queryType": "keyword"
+  },
+  {
+    "id": "rag-05",
+    "query": "why does my back round when I pull heavy off the floor",
+    "expectedSourceTitle": "Conventional Deadlift Form Checklist",
+    "queryType": "semantic"
+  },
+  {
+    "id": "rag-06",
+    "query": "elbow flare bench press shoulder strain",
+    "expectedSourceTitle": "Barbell Bench Press Form Checklist",
+    "queryType": "keyword"
+  },
+  {
+    "id": "rag-07",
+    "query": "dal paneer roti macros",
+    "expectedSourceTitle": "Indian Cuisine Substitutions for Fitness Goals",
+    "queryType": "keyword"
+  },
+  {
+    "id": "rag-08",
+    "query": "I only have plants and legumes to eat, can I still hit my protein goals?",
+    "expectedSourceTitle": "Vegetarian and Vegan Protein Sources",
+    "queryType": "semantic"
+  },
+  {
+    "id": "rag-09",
+    "query": "is the post-workout anabolic window real",
+    "expectedSourceTitle": "Meal Timing and Nutrient Timing",
+    "queryType": "semantic"
+  },
+  {
+    "id": "rag-10",
+    "query": "how many sets per muscle group per week hypertrophy",
+    "expectedSourceTitle": "Training Volume, Intensity, and Frequency for Muscle Growth",
+    "queryType": "keyword"
+  },
+  {
+    "id": "rag-11",
+    "query": "linear vs undulating periodization",
+    "expectedSourceTitle": "Periodization and the Principle of Specificity",
+    "queryType": "keyword"
+  },
+  {
+    "id": "rag-12",
+    "query": "rhabdomyolysis dark urine after intense exercise",
+    "expectedSourceTitle": "Injury Red Flags — When to Modify Training vs. Seek Medical Care",
+    "queryType": "keyword"
+  },
+  {
+    "id": "rag-13",
+    "query": "my progress has completely stalled, what could be wrong",
+    "expectedSourceTitle": "Body Recomposition and Breaking Through Plateaus",
+    "queryType": "semantic"
+  },
+  {
+    "id": "rag-14",
+    "query": "ankle dorsiflexion limiting squat depth",
+    "expectedSourceTitle": "Mobility and Flexibility for Training",
+    "queryType": "keyword"
+  },
+  {
+    "id": "rag-15",
+    "query": "HIIT versus steady state interference effect strength",
+    "expectedSourceTitle": "Cardio for Fat Loss and Cardiovascular Health",
+    "queryType": "keyword"
+  }
+]

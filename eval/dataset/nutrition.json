@@ -1,0 +1,122 @@
+[
+  {
+    "id": "nut-01",
+    "question": "How much protein do I need per day to build muscle?",
+    "expectedSourceTitles": ["Protein Intake for Muscle Growth and Recovery"],
+    "expectedToolCalls": ["search_fitness_knowledge"]
+  },
+  {
+    "id": "nut-02",
+    "question": "How big of a calorie deficit should I run to lose fat without losing muscle?",
+    "expectedSourceTitles": ["Caloric Balance for Fat Loss and Muscle Gain"],
+    "expectedToolCalls": ["search_fitness_knowledge"]
+  },
+  {
+    "id": "nut-03",
+    "question": "How many carbs should I eat if I'm lifting weights 4 times a week?",
+    "expectedSourceTitles": ["Carbohydrates and Dietary Fats for Training"],
+    "expectedToolCalls": ["search_fitness_knowledge"]
+  },
+  {
+    "id": "nut-04",
+    "question": "Is a low-fat diet bad for hormone production?",
+    "expectedSourceTitles": ["Carbohydrates and Dietary Fats for Training"],
+    "expectedToolCalls": ["search_fitness_knowledge"]
+  },
+  {
+    "id": "nut-05",
+    "question": "How much water should I be drinking on training days?",
+    "expectedSourceTitles": ["Hydration and Electrolytes for Training"],
+    "expectedToolCalls": ["search_fitness_knowledge"]
+  },
+  {
+    "id": "nut-06",
+    "question": "I'm vegetarian and eat a lot of Indian food, what should I eat to hit my protein target?",
+    "expectedSourceTitles": ["Indian Cuisine Substitutions for Fitness Goals", "Vegetarian and Vegan Protein Sources"],
+    "expectedToolCalls": ["search_foods", "search_fitness_knowledge"]
+  },
+  {
+    "id": "nut-07",
+    "question": "What are good high-protein swaps for typical Indian restaurant food if I'm trying to cut calories?",
+    "expectedSourceTitles": ["Indian Cuisine Substitutions for Fitness Goals"],
+    "expectedToolCalls": ["search_foods", "search_fitness_knowledge"]
+  },
+  {
+    "id": "nut-08",
+    "question": "I'm vegan, how do I make sure I get enough protein without meat or dairy?",
+    "expectedSourceTitles": ["Vegetarian and Vegan Protein Sources"],
+    "expectedToolCalls": ["search_foods", "search_fitness_knowledge"]
+  },
+  {
+    "id": "nut-09",
+    "question": "Do I need to eat protein within 30 minutes after my workout or is that a myth?",
+    "expectedSourceTitles": ["Meal Timing and Nutrient Timing"],
+    "expectedToolCalls": ["search_fitness_knowledge"]
+  },
+  {
+    "id": "nut-10",
+    "question": "Is it better to eat 3 big meals or 6 small meals a day for muscle gain?",
+    "expectedSourceTitles": ["Meal Timing and Nutrient Timing"],
+    "expectedToolCalls": ["search_fitness_knowledge"]
+  },
+  {
+    "id": "nut-11",
+    "question": "Is creatine actually worth taking, and how much should I take?",
+    "expectedSourceTitles": ["Evidence-Based Supplements for Training"],
+    "expectedToolCalls": ["search_fitness_knowledge"]
+  },
+  {
+    "id": "nut-12",
+    "question": "Should I take a fat burner supplement to lose weight faster?",
+    "expectedSourceTitles": ["Evidence-Based Supplements for Training"],
+    "expectedToolCalls": ["search_fitness_knowledge"]
+  },
+  {
+    "id": "nut-13",
+    "question": "What's my recommended daily calorie intake based on my profile?",
+    "expectedSourceTitles": [],
+    "expectedToolCalls": ["get_user_profile", "calculate_tdee"]
+  },
+  {
+    "id": "nut-14",
+    "question": "Can you break my calorie target down into protein, carbs, and fat grams?",
+    "expectedSourceTitles": [],
+    "expectedToolCalls": ["calculate_macros"]
+  },
+  {
+    "id": "nut-15",
+    "question": "If I weighed 90kg instead of my current weight, what would my calorie target be for fat loss?",
+    "expectedSourceTitles": [],
+    "expectedToolCalls": ["calculate_tdee"]
+  },
+  {
+    "id": "nut-16",
+    "question": "Log that I ate a grilled chicken salad for lunch, about 450 calories, 40g protein, 20g carbs, 20g fat.",
+    "expectedSourceTitles": [],
+    "expectedToolCalls": ["log_meal"]
+  },
+  {
+    "id": "nut-17",
+    "question": "I have a peanut allergy — what protein sources should I avoid or watch out for?",
+    "expectedSourceTitles": ["Vegetarian and Vegan Protein Sources"],
+    "expectedToolCalls": ["get_user_profile", "search_foods"]
+  },
+  {
+    "id": "nut-18",
+    "question": "Change my goal to fat loss and update my calorie target to 2200.",
+    "expectedSourceTitles": [],
+    "expectedToolCalls": ["update_goal"]
+  },
+  {
+    "id": "nut-19",
+    "question": "What foods have complete amino acid profiles versus incomplete ones?",
+    "expectedSourceTitles": ["Vegetarian and Vegan Protein Sources"],
+    "expectedToolCalls": ["search_foods", "search_fitness_knowledge"]
+  },
+  {
+    "id": "nut-20",
+    "question": "Is it true that eating fat makes you fat?",
+    "expectedSourceTitles": ["Carbohydrates and Dietary Fats for Training"],
+    "expectedToolCalls": ["search_fitness_knowledge"]
+  }
+]
