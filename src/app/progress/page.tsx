@@ -6,6 +6,7 @@
  */
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { getAuthedUser } from "@/lib/supabase/auth";
 import { AppShell } from "@/components/nav/app-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { WeightChart } from "@/components/progress/weight-chart";
@@ -17,15 +18,13 @@ import { countDistinctTrainingDays } from "@/lib/fitness/adherence";
 const SIGNED_URL_TTL_SECONDS = 60 * 60;
 
 export default async function ProgressPage() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getAuthedUser();
 
   if (!user) {
     redirect("/login");
   }
 
+  const supabase = await createClient();
   const [bodyMetricsResult, workoutLogsResult, progressPhotosResult] = await Promise.all([
     supabase
       .from("body_metrics")

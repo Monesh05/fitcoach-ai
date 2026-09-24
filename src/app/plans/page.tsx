@@ -7,6 +7,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { ClipboardList, Flame, Plus } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
+import { getAuthedUser } from "@/lib/supabase/auth";
 import { AppShell } from "@/components/nav/app-shell";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -15,15 +16,13 @@ import { DeletePlanButton } from "@/components/plans/delete-plan-button";
 import type { Plan } from "@/lib/types/plan";
 
 export default async function PlansPage() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getAuthedUser();
 
   if (!user) {
     redirect("/login");
   }
 
+  const supabase = await createClient();
   const { data: plans } = await supabase
     .from("generated_plans")
     .select("id, plan_json, created_at")

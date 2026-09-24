@@ -2,10 +2,11 @@
  * page.tsx (chat session) — Loads a persisted chat session's messages and
  * renders the chat client seeded with them.
  * Author: Monesh Abinav <monesh.abinav@vigilnz.com>
- * Date: 2026-09-20
+ * Date: 2026-09-24
  */
-import { notFound, redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
+import { notFound } from "next/navigation";
+import { requireChatShell } from "@/lib/chat/guards";
+import { AppShell } from "@/components/nav/app-shell";
 import { ChatClient } from "@/components/chat/chat-client";
 import { rowToUIMessage } from "@/lib/chat/messages";
 
@@ -15,14 +16,7 @@ export default async function ChatSessionPage({
   params: Promise<{ sessionId: string }>;
 }) {
   const { sessionId } = await params;
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    redirect("/login");
-  }
+  const { user, supabase, sessions } = await requireChatShell();
 
   const { data: session } = await supabase
     .from("chat_sessions")
@@ -43,5 +37,14 @@ export default async function ChatSessionPage({
 
   const initialMessages = (messageRows ?? []).map(rowToUIMessage);
 
-  return <ChatClient sessionId={sessionId} initialMessages={initialMessages} />;
+  return (
+    <AppShell
+      userEmail={user.email ?? ""}
+      title="AI Fitness Coach"
+      subtitle="Your personalized training & nutrition assistant"
+      sessions={sessions}
+    >
+      <ChatClient sessionId={sessionId} initialMessages={initialMessages} />
+    </AppShell>
+  );
 }
