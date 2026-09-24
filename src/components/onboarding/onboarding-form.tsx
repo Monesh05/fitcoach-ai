@@ -194,7 +194,9 @@ export function OnboardingForm({ defaults }: { defaults?: OnboardingDefaults }) 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-6">
       <section className="flex flex-col gap-4">
-        <h2 className="text-sm font-semibold text-muted-foreground">About you</h2>
+        <h2 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+          Personal information
+        </h2>
         <div className="grid grid-cols-2 gap-3">
           <div className="flex flex-col gap-2">
             <Label htmlFor="age">Age</Label>
@@ -252,8 +254,10 @@ export function OnboardingForm({ defaults }: { defaults?: OnboardingDefaults }) 
         </div>
       </section>
 
-      <section className="flex flex-col gap-4">
-        <h2 className="text-sm font-semibold text-muted-foreground">Goal & activity</h2>
+      <section className="flex flex-col gap-4 border-t border-border pt-6">
+        <h2 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+          Fitness goals & experience
+        </h2>
         <div className="flex flex-col gap-2">
           <Label htmlFor="goal">Primary goal</Label>
           <Select
@@ -325,8 +329,10 @@ export function OnboardingForm({ defaults }: { defaults?: OnboardingDefaults }) 
         </div>
       </section>
 
-      <section className="flex flex-col gap-3">
-        <h2 className="text-sm font-semibold text-muted-foreground">Equipment available</h2>
+      <section className="flex flex-col gap-3 border-t border-border pt-6">
+        <h2 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+          Training preferences
+        </h2>
         <div className="flex flex-wrap gap-2">
           {EQUIPMENT_OPTIONS.map((option) => (
             <button
@@ -335,10 +341,10 @@ export function OnboardingForm({ defaults }: { defaults?: OnboardingDefaults }) 
               onClick={() =>
                 setState((p) => ({ ...p, equipment: toggleValue(p.equipment, option) }))
               }
-              className={`rounded-full border px-3 py-1 text-xs ${
+              className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
                 state.equipment.includes(option)
-                  ? "border-primary bg-primary text-primary-foreground"
-                  : "border-input bg-transparent"
+                  ? "border-brand bg-brand text-brand-foreground"
+                  : "border-border bg-transparent text-muted-foreground hover:border-brand/40"
               }`}
             >
               {option}
@@ -347,8 +353,10 @@ export function OnboardingForm({ defaults }: { defaults?: OnboardingDefaults }) 
         </div>
       </section>
 
-      <section className="flex flex-col gap-3">
-        <h2 className="text-sm font-semibold text-muted-foreground">Diet</h2>
+      <section className="flex flex-col gap-3 border-t border-border pt-6">
+        <h2 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+          Nutrition preferences
+        </h2>
         <div className="flex flex-wrap gap-2">
           {DIETARY_OPTIONS.map((option) => (
             <button
@@ -360,10 +368,10 @@ export function OnboardingForm({ defaults }: { defaults?: OnboardingDefaults }) 
                   dietaryPreferences: toggleValue(p.dietaryPreferences, option),
                 }))
               }
-              className={`rounded-full border px-3 py-1 text-xs ${
+              className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
                 state.dietaryPreferences.includes(option)
-                  ? "border-primary bg-primary text-primary-foreground"
-                  : "border-input bg-transparent"
+                  ? "border-brand bg-brand text-brand-foreground"
+                  : "border-border bg-transparent text-muted-foreground hover:border-brand/40"
               }`}
             >
               {option}
@@ -392,8 +400,10 @@ export function OnboardingForm({ defaults }: { defaults?: OnboardingDefaults }) 
         </div>
       </section>
 
-      <section className="flex flex-col gap-3">
-        <h2 className="text-sm font-semibold text-muted-foreground">Daily targets</h2>
+      <section className="flex flex-col gap-3 border-t border-border pt-6">
+        <h2 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+          Daily targets
+        </h2>
         {suggestedTargets && (
           <p className="text-xs text-muted-foreground">
             Suggested: {suggestedTargets.calorieTarget} kcal ·{" "}
@@ -401,7 +411,7 @@ export function OnboardingForm({ defaults }: { defaults?: OnboardingDefaults }) 
             <button
               type="button"
               onClick={applySuggestedTargets}
-              className="underline underline-offset-2"
+              className="text-brand underline underline-offset-2"
             >
               Use suggested
             </button>

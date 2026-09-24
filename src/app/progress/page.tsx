@@ -2,11 +2,11 @@
  * page.tsx (progress) — Weight trend, adherence, workout log, and progress
  * photos.
  * Author: Monesh Abinav <monesh.abinav@vigilnz.com>
- * Date: 2026-09-20
+ * Date: 2026-09-24
  */
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { AppNav } from "@/components/nav/app-nav";
+import { AppShell } from "@/components/nav/app-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { WeightChart } from "@/components/progress/weight-chart";
 import { LogWeightForm } from "@/components/progress/log-weight-form";
@@ -74,89 +74,102 @@ export default async function ProgressPage() {
   );
 
   return (
-    <div className="flex min-h-svh flex-col">
-      <AppNav userEmail={user.email ?? ""} />
-      <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-6 p-4">
-        <h1 className="text-lg font-semibold">Progress</h1>
+    <AppShell userEmail={user.email ?? ""} title="Progress" subtitle="Weight, workouts, and photos over time">
+      <div className="flex-1 overflow-y-auto">
+        <div className="mx-auto grid w-full max-w-5xl gap-4 p-4 sm:p-8 lg:grid-cols-3">
+          <div className="flex flex-col gap-4 lg:col-span-2">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">Weight trend</CardTitle>
+              </CardHeader>
+              <CardContent className="flex flex-col gap-4">
+                <WeightChart data={weightPoints} />
+                {weightChange !== null && (
+                  <p className="text-sm text-muted-foreground">
+                    <span
+                      className={
+                        weightChange <= 0 ? "font-medium text-brand" : "font-medium text-foreground"
+                      }
+                    >
+                      {weightChange > 0 ? "+" : ""}
+                      {weightChange.toFixed(1)} kg
+                    </span>{" "}
+                    since your first log
+                  </p>
+                )}
+                <LogWeightForm />
+              </CardContent>
+            </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">Weight trend</CardTitle>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-4">
-            <WeightChart data={weightPoints} />
-            {weightChange !== null && (
-              <p className="text-sm text-muted-foreground">
-                {weightChange > 0 ? "+" : ""}
-                {weightChange.toFixed(1)} kg since your first log
-              </p>
-            )}
-            <LogWeightForm />
-          </CardContent>
-        </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">Log a workout</CardTitle>
+              </CardHeader>
+              <CardContent className="flex flex-col gap-4">
+                <LogWorkoutForm />
+                {workoutLogs.length > 0 && (
+                  <div className="flex flex-col gap-2 border-t border-border pt-4">
+                    <h3 className="text-xs font-semibold text-muted-foreground">Recent logs</h3>
+                    <ul className="flex flex-col gap-1 text-sm">
+                      {workoutLogs.map((log, index) => (
+                        <li key={index}>
+                          <span className="text-muted-foreground">{log.performed_at}</span> —{" "}
+                          <span className="font-medium">{log.exercise_name}</span>{" "}
+                          {Array.isArray(log.sets) && log.sets.length > 0 && (
+                            <span className="text-muted-foreground">
+                              ({(log.sets as string[]).join(", ")})
+                            </span>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">Adherence</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-muted-foreground">
-              {trainingDaysLast7} training day(s) logged in the last 7 days ·{" "}
-              {trainingDaysLast30} in the last 30 days
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">Log a workout</CardTitle>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-4">
-            <LogWorkoutForm />
-            {workoutLogs.length > 0 && (
-              <div className="flex flex-col gap-2 border-t pt-4">
-                <h3 className="text-xs font-semibold text-muted-foreground">Recent logs</h3>
-                <ul className="flex flex-col gap-1 text-sm">
-                  {workoutLogs.map((log, index) => (
-                    <li key={index}>
-                      <span className="text-muted-foreground">{log.performed_at}</span> —{" "}
-                      <span className="font-medium">{log.exercise_name}</span>{" "}
-                      {Array.isArray(log.sets) && log.sets.length > 0 && (
-                        <span className="text-muted-foreground">
-                          ({(log.sets as string[]).join(", ")})
-                        </span>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">Progress photos</CardTitle>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-4">
-            <PhotoUpload />
-            <div className="grid grid-cols-3 gap-2">
-              {photosWithUrls.map(
-                (photo) =>
-                  photo.signedUrl && (
-                    // eslint-disable-next-line @next/next/no-img-element -- signed URL from private storage, not a static asset
-                    <img
-                      key={photo.id}
-                      src={photo.signedUrl}
-                      alt={`Progress photo from ${photo.recorded_at}`}
-                      className="aspect-square rounded-md border object-cover"
-                    />
-                  ),
-              )}
+          <div className="flex flex-col gap-4">
+            <div className="grid grid-cols-2 gap-4">
+              <Card>
+                <CardContent className="pt-6">
+                  <p className="text-2xl font-semibold text-brand">{trainingDaysLast7}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">Days trained (7d)</p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="pt-6">
+                  <p className="text-2xl font-semibold">{trainingDaysLast30}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">Days trained (30d)</p>
+                </CardContent>
+              </Card>
             </div>
-          </CardContent>
-        </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">Progress photos</CardTitle>
+              </CardHeader>
+              <CardContent className="flex flex-col gap-4">
+                <PhotoUpload />
+                <div className="grid grid-cols-3 gap-2">
+                  {photosWithUrls.map(
+                    (photo) =>
+                      photo.signedUrl && (
+                        // eslint-disable-next-line @next/next/no-img-element -- signed URL from private storage, not a static asset
+                        <img
+                          key={photo.id}
+                          src={photo.signedUrl}
+                          alt={`Progress photo from ${photo.recorded_at}`}
+                          className="aspect-square rounded-md border border-border object-cover"
+                        />
+                      ),
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
       </div>
-    </div>
+    </AppShell>
   );
 }

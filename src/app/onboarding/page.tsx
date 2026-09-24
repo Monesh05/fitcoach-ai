@@ -1,13 +1,13 @@
 /**
  * page.tsx (onboarding) — Captures/edits the full fitness profile.
  * Author: Monesh Abinav <monesh.abinav@vigilnz.com>
- * Date: 2026-09-20
+ * Date: 2026-09-24
  */
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { OnboardingForm, type OnboardingDefaults } from "@/components/onboarding/onboarding-form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { AppNav } from "@/components/nav/app-nav";
+import { AppShell } from "@/components/nav/app-shell";
 
 export default async function OnboardingPage() {
   const supabase = await createClient();
@@ -46,23 +46,30 @@ export default async function OnboardingPage() {
       }
     : undefined;
 
-  return (
-    <div className="flex min-h-svh flex-col">
-      {profile && <AppNav userEmail={user.email ?? ""} />}
-      <div className="flex flex-1 items-center justify-center bg-muted/30 p-4">
-        <Card className="w-full max-w-xl">
-          <CardHeader>
-            <CardTitle>{profile ? "Update your profile" : "Tell us about yourself"}</CardTitle>
-            <CardDescription>
-              This helps FitCoach AI tailor training, nutrition, and meal plans to you. You
-              can update it anytime.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <OnboardingForm defaults={defaults} />
-          </CardContent>
-        </Card>
-      </div>
+  const form = (
+    <div className="flex flex-1 items-center justify-center overflow-y-auto bg-muted/30 p-4">
+      <Card className="w-full max-w-xl">
+        <CardHeader>
+          <CardTitle>{profile ? "Update your profile" : "Tell us about yourself"}</CardTitle>
+          <CardDescription>
+            This helps FitCoach AI tailor training, nutrition, and meal plans to you. You
+            can update it anytime.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <OnboardingForm defaults={defaults} />
+        </CardContent>
+      </Card>
     </div>
+  );
+
+  if (!profile) {
+    return <div className="flex min-h-svh flex-col">{form}</div>;
+  }
+
+  return (
+    <AppShell userEmail={user.email ?? ""} title="Profile" subtitle="Your fitness profile and preferences">
+      {form}
+    </AppShell>
   );
 }

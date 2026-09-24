@@ -1,13 +1,13 @@
 /**
  * layout.tsx (chat) — Auth- and onboarding-guarded shell shared by every
- * /chat/* route: top nav + the chat session sidebar.
+ * /chat/* route.
  * Author: Monesh Abinav <monesh.abinav@vigilnz.com>
- * Date: 2026-09-20
+ * Date: 2026-09-24
  */
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { AppNav } from "@/components/nav/app-nav";
-import { ChatSidebar } from "@/components/chat/chat-sidebar";
+import { AppShell } from "@/components/nav/app-shell";
+import { getChatSessions } from "@/lib/chat/sessions";
 
 export default async function ChatLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient();
@@ -29,19 +29,16 @@ export default async function ChatLayout({ children }: { children: React.ReactNo
     redirect("/onboarding");
   }
 
-  const { data: sessions } = await supabase
-    .from("chat_sessions")
-    .select("id, title")
-    .eq("user_id", user.id)
-    .order("created_at", { ascending: false });
+  const sessions = await getChatSessions(supabase, user.id);
 
   return (
-    <div className="flex h-svh flex-col">
-      <AppNav userEmail={user.email ?? ""} />
-      <div className="flex flex-1 overflow-hidden">
-        <ChatSidebar sessions={sessions ?? []} />
-        <div className="flex-1 overflow-hidden">{children}</div>
-      </div>
-    </div>
+    <AppShell
+      userEmail={user.email ?? ""}
+      title="AI Fitness Coach"
+      subtitle="Your personalized training & nutrition assistant"
+      sessions={sessions}
+    >
+      {children}
+    </AppShell>
   );
 }
