@@ -138,7 +138,7 @@ export function ChatClient({
 
   return (
     <div className="mx-auto flex h-full min-h-0 w-full max-w-3xl flex-col p-4">
-      <div ref={scrollContainerRef} className="min-h-0 flex-1 overflow-y-auto py-4">
+      <div ref={scrollContainerRef} className="no-scrollbar min-h-0 flex-1 overflow-y-auto py-4">
         <div className="flex flex-col gap-6">
           {messages.length === 0 && (
             <div className="flex flex-1 flex-col items-center justify-center gap-6 py-12 text-center">

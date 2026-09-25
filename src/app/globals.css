@@ -137,3 +137,13 @@
     @apply font-sans;
   }
 }
+
+/* Scrolls normally (wheel/trackpad/keyboard); just hides the visible track. */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
