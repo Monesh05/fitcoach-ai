@@ -22,12 +22,27 @@ import {
   Search,
   SquarePen,
   UserRound,
+  UtensilsCrossed,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DeleteSessionButton } from "@/components/chat/delete-session-button";
 import { createClient } from "@/lib/supabase/client";
 import type { ChatSessionSummary } from "@/lib/chat/sessions";
+
+type MealLogEntry = {
+  id: string;
+  name: string;
+  calories: number;
+  createdAt: string;
+};
+
+function formatLoggedAt(iso: string): string {
+  const date = new Date(iso);
+  const day = date.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+  const time = date.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" });
+  return `${day} · ${time}`;
+}
 
 const NAV_ITEMS = [
   { href: "/chat", label: "Chat", icon: MessageCircle, match: "/chat" },
@@ -50,6 +65,7 @@ export function AppSidebar({
   const supabase = createClient();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [query, setQuery] = useState("");
+  const [mealLogs, setMealLogs] = useState<MealLogEntry[]>([]);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -60,6 +76,31 @@ export function AppSidebar({
       // localStorage unavailable — default to expanded.
     }
   }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    supabase
+      .from("meal_logs")
+      .select("id, name, calories, created_at")
+      .order("created_at", { ascending: false })
+      .limit(8)
+      .then(({ data }) => {
+        if (cancelled || !data) return;
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- syncing sidebar list from a client-only data fetch, not derivable from props
+        setMealLogs(
+          data.map((row) => ({
+            id: row.id,
+            name: row.name,
+            calories: row.calories,
+            createdAt: row.created_at,
+          })),
+        );
+      });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- refetch on route change so a just-logged meal shows up after navigating back to the app
+  }, [pathname]);
 
   function setCollapsed(next: boolean) {
     setIsCollapsed(next);
@@ -213,6 +254,28 @@ export function AppSidebar({
             </Link>
           ))}
         </nav>
+      )}
+
+      {mealLogs.length > 0 && (
+        <>
+          <div className="my-1 border-t border-border" />
+          <div className="flex flex-col gap-0.5 px-2 pt-1 pb-2">
+            <p className="flex items-center gap-1.5 px-2 pb-1 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+              <UtensilsCrossed className="size-3" />
+              Recent meals
+            </p>
+            <div className="no-scrollbar flex max-h-36 flex-col gap-0.5 overflow-y-auto">
+              {mealLogs.map((meal) => (
+                <div key={meal.id} className="flex flex-col gap-0.5 rounded-md px-2 py-1.5">
+                  <span className="truncate text-sm font-medium text-foreground">{meal.name}</span>
+                  <span className="text-xs text-muted-foreground">
+                    {formatLoggedAt(meal.createdAt)} · {meal.calories} kcal
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
       )}
 
       <div className="my-1 border-t border-border" />
