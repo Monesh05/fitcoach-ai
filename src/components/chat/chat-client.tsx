@@ -35,7 +35,6 @@ import {
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { getToolLabel } from "@/lib/ai/tool-labels";
 import { MarkdownContent } from "@/components/chat/markdown-content";
@@ -86,6 +85,7 @@ export function ChatClient({
   const [pendingImage, setPendingImage] = useState<File | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const isSubmitted = status === "submitted";
   const isStreaming = status === "submitted" || status === "streaming";
@@ -102,6 +102,12 @@ export function ChatClient({
       if (imagePreviewUrl) URL.revokeObjectURL(imagePreviewUrl);
     };
   }, [imagePreviewUrl]);
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    container.scrollTo({ top: container.scrollHeight, behavior: "smooth" });
+  }, [messages, status]);
 
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
@@ -132,7 +138,7 @@ export function ChatClient({
 
   return (
     <div className="mx-auto flex h-full min-h-0 w-full max-w-3xl flex-col p-4">
-      <ScrollArea className="min-h-0 flex-1 py-4">
+      <div ref={scrollContainerRef} className="min-h-0 flex-1 overflow-y-auto py-4">
         <div className="flex flex-col gap-6">
           {messages.length === 0 && (
             <div className="flex flex-1 flex-col items-center justify-center gap-6 py-12 text-center">
@@ -262,7 +268,7 @@ export function ChatClient({
             </div>
           )}
         </div>
-      </ScrollArea>
+      </div>
 
       <form
         onSubmit={handleSubmit}
