@@ -33,6 +33,7 @@ import { friendlyModelErrorMessage } from "@/lib/ai/errors";
 const requestSchema = z.object({
   messages: z.array(z.unknown()).min(1),
   sessionId: z.string().uuid(),
+  trigger: z.enum(["submit-message", "regenerate-message"]).optional(),
 });
 
 const MAX_AGENT_STEPS = 6;
@@ -62,7 +63,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
 
-  const { sessionId } = parsedBody.data;
+  const { sessionId, trigger } = parsedBody.data;
   const messages = parsedBody.data.messages as unknown as UIMessage[];
   const lastMessage = messages[messages.length - 1];
 
@@ -79,18 +80,25 @@ export async function POST(request: Request) {
     .select("id", { count: "exact", head: true })
     .eq("session_id", sessionId);
 
-  const { error: insertUserMessageError } = await supabase.from("messages").insert({
-    session_id: sessionId,
-    role: "user",
-    content: lastMessageText,
-    image_url: imagePart?.url ?? null,
-  });
+  // A regenerate (e.g. retrying after an error) resends the full history,
+  // including the user turn already persisted from the original attempt —
+  // only persist it again on a genuine new submission.
+  const isRegenerate = trigger === "regenerate-message";
 
-  if (insertUserMessageError) {
-    return NextResponse.json(
-      { error: `Failed to save message: ${insertUserMessageError.message}` },
-      { status: 500 },
-    );
+  if (!isRegenerate) {
+    const { error: insertUserMessageError } = await supabase.from("messages").insert({
+      session_id: sessionId,
+      role: "user",
+      content: lastMessageText,
+      image_url: imagePart?.url ?? null,
+    });
+
+    if (insertUserMessageError) {
+      return NextResponse.json(
+        { error: `Failed to save message: ${insertUserMessageError.message}` },
+        { status: 500 },
+      );
+    }
   }
 
   if (!existingMessageCount) {
