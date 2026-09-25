@@ -14,7 +14,10 @@ import { BookOpenCheck } from "lucide-react";
 // punctuation) are treated as citations — matches how the system prompts
 // instruct the model to cite: "(Progressive Overload)" / "(Source 1)".
 const CITATION_PATTERN = /\(([A-Z][A-Za-z0-9&,'\-\s]{5,80})\)/g;
-const CITATION_MARKER = "\u0000CITE\u0000";
+// A Private Use Area codepoint — unlike \u0000, it survives Postgres text
+// columns, JSON, and HTML round-trips intact (NUL bytes get silently
+// mangled by Postgres once persisted, breaking this marker).
+const CITATION_MARKER = "CITE";
 
 function markCitations(text: string): string {
   return text.replace(CITATION_PATTERN, (_match, title: string) => `\`${CITATION_MARKER}${title}\``);
