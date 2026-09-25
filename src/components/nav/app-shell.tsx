@@ -27,9 +27,9 @@ export function AppShell({
   return (
     <div className="flex h-svh flex-col sm:flex-row">
       <AppSidebar userEmail={userEmail} sessions={sessions} />
-      <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
         <AppTopBar title={title} subtitle={subtitle} sessions={sessions} />
-        <main className="flex flex-1 flex-col overflow-hidden pb-14 sm:pb-0">{children}</main>
+        <main className="flex min-h-0 flex-1 flex-col overflow-hidden pb-14 sm:pb-0">{children}</main>
       </div>
       <MobileBottomNav />
     </div>
